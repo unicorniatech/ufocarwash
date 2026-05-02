@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UFO Carwash | Reserva tu lavado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2306060a'/%3E%3Cpath d='M32 8 58 54H6Z' fill='none' stroke='%2318e7ff' stroke-width='5'/%3E%3Ccircle cx='32' cy='38' r='8' fill='%2374ff26'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="scroll-stage" id="scrollStage">
+      <section class="cinema" aria-label="Experiencia UFO Carwash">
+        <video
+          id="heroVideo"
+          class="hero-video"
+          src="./public/videos/ufo-carwash-scroll.mp4"
+          muted
+          playsinline
+          preload="auto"
+        ></video>
+
+        <div class="dust-wash" aria-hidden="true"></div>
+        <div class="neon-wash" aria-hidden="true"></div>
+        <div class="watermark-cover" aria-hidden="true"></div>
+
+        <header class="old-site">
+          <div class="old-bar">
+            <span>UFOCARWASH</span>
+            <button aria-label="Menu">☰</button>
+          </div>
+          <div class="old-copy">
+            <p>Autolavado en Zacatepec, Morelos</p>
+            <h1>BIENVENIDOS A UFOCARWASH</h1>
+            <button>Agendar lavado</button>
+          </div>
+        </header>
+
+        <section class="ufo-ui">
+          <nav class="neon-nav" aria-label="Principal">
+            <a href="#servicios">Servicios</a>
+            <a href="#reservar">Horarios</a>
+            <a href="#app">App</a>
+            <a href="./admin.html">Admin</a>
+          </nav>
+
+          <div class="brand-lockup">
+            <span class="signal">Abducción activa</span>
+            <h2>UFO CARWASH</h2>
+            <p>Tu coche entra desde las calles de Morelos y regresa limpio, brillante y listo para despegar.</p>
+          </div>
+
+          <aside class="booking-panel" aria-label="Reservación rápida">
+            <div class="panel-head">
+              <span>Reserva</span>
+              <strong>Hoy</strong>
+            </div>
+            <div class="service-row">
+              <span>Lavado UFO completo</span>
+              <strong>$180</strong>
+            </div>
+            <div class="slot-grid" aria-label="Horarios disponibles" data-mini-slots>
+              <button type="button">10:30</button>
+              <button type="button">11:00</button>
+              <button type="button">12:30</button>
+              <button type="button">14:00</button>
+            </div>
+            <a class="pay-button" href="#reservar">Buscar y pagar</a>
+          </aside>
+        </section>
+
+        <div class="scroll-cue" aria-hidden="true">
+          <span></span>
+        </div>
+      </section>
+    </main>
+
+    <section class="afterglow" id="servicios">
+      <div class="section-kicker">Servicios</div>
+      <h2>Lavados, horarios y pagos en una sola órbita.</h2>
+      <p>El cliente busca un espacio, reserva su servicio y deja el pago listo. El equipo solo ve la fila de coches por atender.</p>
+      <div class="service-cards" data-services></div>
+    </section>
+
+    <section class="booking-flow" id="reservar" aria-label="Reservar lavado">
+      <div class="booking-copy">
+        <div class="section-kicker">Reserva</div>
+        <h2>Encuentra tu slot y confirma sin llamadas.</h2>
+        <p>Este flujo ya guarda reservas localmente para que el admin las pueda controlar. El pago es simulado por ahora, listo para conectar Stripe o Mercado Pago.</p>
+      </div>
+
+      <form class="booking-form" id="bookingForm">
+        <div class="field-grid">
+          <label>
+            Servicio
+            <select name="service" id="serviceSelect"></select>
+          </label>
+          <label>
+            Fecha
+            <input type="date" name="date" id="dateInput" required>
+          </label>
+          <label>
+            Nombre
+            <input type="text" name="customer" placeholder="Nombre del cliente" required>
+          </label>
+          <label>
+            Teléfono
+            <input type="tel" name="phone" placeholder="777 123 4567" required>
+          </label>
+          <label>
+            Auto
+            <input type="text" name="vehicle" placeholder="Ej. Jetta negro" required>
+          </label>
+          <label>
+            Pago
+            <select name="payment">
+              <option value="Tarjeta simulada">Tarjeta simulada</option>
+              <option value="Pago en sitio">Pago en sitio</option>
+              <option value="Transferencia">Transferencia</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="slot-picker">
+          <div class="panel-head">
+            <span>Horarios disponibles</span>
+            <strong data-selected-date>Hoy</strong>
+          </div>
+          <div class="slot-grid flow-slots" id="slotGrid"></div>
+        </div>
+
+        <div class="checkout-strip">
+          <div>
+            <span>Total</span>
+            <strong id="bookingTotal">$180 MXN</strong>
+          </div>
+          <button class="pay-button" type="submit">Reservar y pagar</button>
+        </div>
+
+        <p class="booking-message" id="bookingMessage" role="status"></p>
+      </form>
+    </section>
+
+    <section class="how-it-works">
+      <div class="section-kicker">Cómo funciona</div>
+      <div class="steps">
+        <article>
+          <span>01</span>
+          <h3>Busca espacio</h3>
+          <p>El sistema bloquea horarios ocupados y muestra solo los slots disponibles.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Reserva y paga</h3>
+          <p>El cliente confirma su servicio desde el celular sin mandar mensajes sueltos.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Admin controla</h3>
+          <p>El negocio ve pendientes, pagadas, completadas y canceladas desde el panel.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="app-section" id="app">
+      <div class="app-copy">
+        <div class="section-kicker">App</div>
+        <h2>Después metemos tu mockup aquí.</h2>
+        <p>Mientras llega la imagen, dejé un preview de app con estado de reserva, QR, ETA y pagos para marcar el lugar exacto en el sitio.</p>
+        <div class="cta-row">
+          <a class="outline-link" href="#reservar">Reservar ahora</a>
+          <a class="outline-link" href="./admin.html">Abrir admin</a>
+        </div>
+      </div>
+      <div class="phone-mock" aria-label="Vista previa de app">
+        <div class="phone-top"></div>
+        <div class="phone-card active">
+          <span>Reserva activa</span>
+          <strong>Lavado UFO completo</strong>
+          <p>11:00 AM · Box 2</p>
+        </div>
+        <div class="qr-mock"></div>
+        <div class="phone-row"><span>Pago</span><strong>Confirmado</strong></div>
+        <div class="phone-row"><span>Entrega</span><strong>28 min</strong></div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <h2>¿Listo para abducir la agenda?</h2>
+      <a class="pay-button" href="#reservar">Buscar horario</a>
+    </section>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

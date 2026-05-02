@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | UFO Carwash</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2306060a'/%3E%3Cpath d='M32 8 58 54H6Z' fill='none' stroke='%2318e7ff' stroke-width='5'/%3E%3Ccircle cx='32' cy='38' r='8' fill='%2374ff26'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="admin-body">
+    <header class="admin-shell">
+      <nav class="admin-nav">
+        <a href="./index.html">UFO CARWASH</a>
+        <div>
+          <a href="./index.html#reservar">Nueva reserva</a>
+          <button id="seedBookings" type="button">Demo data</button>
+        </div>
+      </nav>
+      <div class="admin-hero">
+        <div>
+          <div class="section-kicker">Admin</div>
+          <h1>Control de reservas</h1>
+          <p>Vista operativa para revisar pagos, confirmar llegadas y cerrar lavados completados.</p>
+        </div>
+        <div class="admin-stats" id="adminStats"></div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-toolbar" aria-label="Filtros">
+        <label>
+          Fecha
+          <input type="date" id="adminDate">
+        </label>
+        <label>
+          Estado
+          <select id="statusFilter">
+            <option value="all">Todos</option>
+            <option value="Pagada">Pagadas</option>
+            <option value="Pendiente">Pendientes</option>
+            <option value="Completada">Completadas</option>
+            <option value="Cancelada">Canceladas</option>
+          </select>
+        </label>
+        <button id="clearDone" type="button">Limpiar completadas</button>
+      </section>
+
+      <section class="booking-table" id="bookingTable" aria-label="Lista de reservas"></section>
+    </main>
+
+    <script src="./admin.js"></script>
+  </body>
+</html>
