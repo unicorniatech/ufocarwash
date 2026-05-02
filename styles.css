@@ -605,6 +605,45 @@ select {
   margin-top: 24px;
 }
 
+.membership-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.membership-benefits article {
+  min-height: 178px;
+  padding: 16px;
+  border: 1px solid rgb(116 255 38 / 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.025)),
+    rgb(6 10 18 / 0.7);
+}
+
+.membership-benefits span,
+.app-status span {
+  color: #b8ff9d;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.membership-benefits strong {
+  display: block;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.membership-benefits p {
+  margin: 8px 0 0;
+  color: #b8d4dc;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .outline-link {
   display: inline-flex;
   align-items: center;
@@ -620,7 +659,7 @@ select {
 
 .phone-mock {
   width: min(390px, 100%);
-  min-height: 660px;
+  min-height: 650px;
   justify-self: center;
   padding: 18px;
   border-radius: 34px;
@@ -629,16 +668,39 @@ select {
     radial-gradient(circle at top, rgb(24 231 255 / 0.2), transparent 44%);
 }
 
+.vip-phone {
+  position: relative;
+  overflow: hidden;
+}
+
+.vip-phone::before {
+  content: "";
+  position: absolute;
+  inset: 70px -40px auto;
+  height: 260px;
+  background:
+    radial-gradient(circle, rgb(116 255 38 / 0.28), transparent 58%),
+    conic-gradient(from 90deg, rgb(24 231 255 / 0.18), rgb(255 53 232 / 0.22), rgb(116 255 38 / 0.2), rgb(24 231 255 / 0.18));
+  filter: blur(18px);
+  opacity: 0.85;
+}
+
+.vip-phone > * {
+  position: relative;
+  z-index: 1;
+}
+
 .phone-top {
   width: 112px;
   height: 26px;
-  margin: 4px auto 26px;
+  margin: 4px auto 24px;
   border-radius: 999px;
   background: #02050a;
 }
 
 .phone-card {
-  padding: 18px;
+  padding: 15px;
+  margin-bottom: 11px;
 }
 
 .phone-card span,
@@ -653,6 +715,108 @@ select {
   display: block;
   margin-top: 8px;
   font-size: 25px;
+}
+
+.app-status {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 10px;
+  align-items: end;
+  margin-bottom: 11px;
+  padding: 15px 18px;
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgb(116 255 38 / 0.2), rgb(24 231 255 / 0.16), rgb(255 53 232 / 0.2)),
+    rgb(5 8 14 / 0.82);
+  border: 1px solid rgb(116 255 38 / 0.24);
+}
+
+.app-status strong {
+  font-size: 52px;
+  line-height: 0.84;
+  font-family: "Archivo Black", Inter, sans-serif;
+}
+
+.app-status small {
+  grid-column: 1 / -1;
+  color: #d8ffc2;
+  font-weight: 900;
+}
+
+.vip-card {
+  border-color: rgb(116 255 38 / 0.48);
+  box-shadow: 0 0 28px rgb(116 255 38 / 0.14), inset 0 0 24px rgb(116 255 38 / 0.08);
+}
+
+.vip-orbit {
+  display: grid;
+  place-items: center;
+  height: 116px;
+  margin: 8px 0 11px;
+}
+
+.vip-orbit span {
+  position: absolute;
+  width: 166px;
+  height: 78px;
+  border: 3px solid rgb(24 231 255 / 0.7);
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgb(24 231 255 / 0.42);
+  transform: rotate(-14deg);
+}
+
+.vip-orbit span::before,
+.vip-orbit span::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 2px solid rgb(255 53 232 / 0.58);
+  border-radius: inherit;
+}
+
+.vip-orbit span::after {
+  inset: 34px;
+  border-color: rgb(116 255 38 / 0.7);
+}
+
+.vip-orbit strong {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #071009;
+  background: linear-gradient(135deg, var(--lime), var(--cyan));
+  font-family: "Archivo Black", Inter, sans-serif;
+  box-shadow: 0 0 34px rgb(116 255 38 / 0.4);
+}
+
+.app-slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.app-slots button {
+  min-height: 42px;
+  border: 1px solid rgb(24 231 255 / 0.34);
+  border-radius: 6px;
+  color: #fff;
+  background: rgb(24 231 255 / 0.1);
+  font-weight: 900;
+}
+
+.app-slots button:first-child {
+  border-color: rgb(116 255 38 / 0.72);
+  color: #061008;
+  background: var(--lime);
+}
+
+.lounge-card {
+  background:
+    radial-gradient(circle at top right, rgb(255 53 232 / 0.18), transparent 42%),
+    rgb(7 10 18 / 0.78);
 }
 
 .qr-mock {
@@ -670,8 +834,19 @@ select {
 .phone-row {
   display: flex;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0;
   border-top: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.app-cta {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 8px;
+  color: #020306;
+  background: linear-gradient(90deg, var(--lime), var(--cyan), var(--magenta));
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .final-cta {
@@ -918,6 +1093,7 @@ select {
 
   .service-cards,
   .steps,
+  .membership-benefits,
   .booking-flow,
   .app-section,
   .admin-hero,
