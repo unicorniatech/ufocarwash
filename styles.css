@@ -68,6 +68,10 @@ a {
   z-index: 0;
 }
 
+.mobile-frame {
+  display: none;
+}
+
 .dust-wash,
 .neon-wash {
   position: absolute;
@@ -1172,13 +1176,27 @@ select {
   }
 
   .hero-video {
+    display: none;
     object-fit: contain;
     object-position: center center;
     background: #05050a;
   }
 
   .details-video {
+    display: none;
     object-fit: contain;
+    object-position: center center;
+    background: #05050a;
+  }
+
+  .mobile-frame {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center center;
     background: #05050a;
   }

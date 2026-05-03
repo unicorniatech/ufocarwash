@@ -1,7 +1,9 @@
 const stage = document.querySelector("#scrollStage");
 const video = document.querySelector("#heroVideo");
+const heroFrame = document.querySelector("#heroFrame");
 const detailsStage = document.querySelector("#detalles");
 const detailsVideo = document.querySelector("#detailsVideo");
+const detailsFrame = document.querySelector("#detailsFrame");
 const STORAGE_KEY = "ufo-carwash-bookings";
 const services = [
   { name: "Lavado UFO completo", price: 180, minutes: 45, description: "Exterior, espuma activa, rines, secado y brillo final." },
@@ -13,6 +15,7 @@ const slots = ["09:00", "09:45", "10:30", "11:00", "12:30", "14:00", "15:30", "1
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const mobileVideoQuery = window.matchMedia("(max-width: 820px)");
 const videoSources = new WeakMap();
+const loadedFramePreloads = new Set();
 
 function rememberVideoSource(videoElement) {
   if (!videoElement) return;
@@ -48,11 +51,38 @@ function fallbackToDesktop(videoElement) {
 
 function applyResponsiveVideos() {
   const useMobile = mobileVideoQuery.matches;
+  document.documentElement.classList.toggle("mobile-frame-mode", useMobile);
   setVideoSource(video, useMobile);
   setVideoSource(detailsVideo, useMobile);
 }
 
+function framePath(frameElement, index) {
+  const base = frameElement.dataset.frameBase;
+  return `${base}${String(index).padStart(3, "0")}.jpg`;
+}
+
+function updateFrameSequence(frameElement, progress) {
+  if (!frameElement || !mobileVideoQuery.matches) return;
+
+  const frameCount = Number(frameElement.dataset.frameCount || 1);
+  const index = clamp(Math.round(progress * (frameCount - 1)) + 1, 1, frameCount);
+  const nextSrc = framePath(frameElement, index);
+  if (!frameElement.src.endsWith(nextSrc)) {
+    frameElement.src = nextSrc;
+  }
+
+  [index + 1, index + 2].forEach((preloadIndex) => {
+    if (preloadIndex > frameCount) return;
+    const preloadSrc = framePath(frameElement, preloadIndex);
+    if (loadedFramePreloads.has(preloadSrc)) return;
+    loadedFramePreloads.add(preloadSrc);
+    const image = new Image();
+    image.src = preloadSrc;
+  });
+}
+
 function scrubVideo(videoElement, progress) {
+  if (mobileVideoQuery.matches) return;
   if (!videoElement || !Number.isFinite(videoElement.duration) || videoElement.duration <= 0) return;
   const targetTime = progress * Math.max(0, videoElement.duration - 0.05);
   if (Math.abs(videoElement.currentTime - targetTime) > 0.025) {
@@ -73,6 +103,7 @@ function syncScroll() {
   document.documentElement.style.setProperty("--dust", String(1 - easedUfo));
   document.documentElement.style.setProperty("--ufo", String(easedUfo));
 
+  updateFrameSequence(heroFrame, progress);
   scrubVideo(video, progress);
 }
 
@@ -85,6 +116,7 @@ function syncDetailsScroll() {
 
   document.documentElement.style.setProperty("--details", String(progress));
 
+  updateFrameSequence(detailsFrame, progress);
   scrubVideo(detailsVideo, progress);
 }
 
