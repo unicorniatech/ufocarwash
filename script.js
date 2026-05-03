@@ -11,6 +11,58 @@ const services = [
 const slots = ["09:00", "09:45", "10:30", "11:00", "12:30", "14:00", "15:30", "17:00"];
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+const mobileVideoQuery = window.matchMedia("(max-width: 820px)");
+const videoSources = new WeakMap();
+
+function rememberVideoSource(videoElement) {
+  if (!videoElement) return;
+  videoSources.set(videoElement, {
+    desktop: videoElement.dataset.desktopSrc || videoElement.currentSrc || videoElement.src,
+    mobile: videoElement.dataset.mobileSrc,
+    mobileEnabled: videoElement.dataset.mobileEnabled === "true",
+    usingMobile: false,
+  });
+}
+
+function setVideoSource(videoElement, preferMobile) {
+  const source = videoSources.get(videoElement);
+  if (!source) return;
+
+  const hasMobile = preferMobile && source.mobile && source.mobileEnabled;
+  const nextSrc = hasMobile ? source.mobile : source.desktop;
+  const absoluteNext = new URL(nextSrc, window.location.href).href;
+  if (videoElement.currentSrc === absoluteNext || videoElement.src === absoluteNext) return;
+
+  videoElement.classList.toggle("using-mobile-video", hasMobile);
+  videoElement.src = nextSrc;
+  videoElement.load();
+}
+
+function fallbackToDesktop(videoElement) {
+  const source = videoSources.get(videoElement);
+  if (!source || videoElement.currentSrc.endsWith(source.desktop)) return;
+  videoElement.classList.remove("using-mobile-video");
+  videoElement.src = source.desktop;
+  videoElement.load();
+}
+
+function applyResponsiveVideos() {
+  const useMobile = mobileVideoQuery.matches;
+  setVideoSource(video, useMobile);
+  setVideoSource(detailsVideo, useMobile);
+}
+
+function scrubVideo(videoElement, progress) {
+  if (!videoElement || !Number.isFinite(videoElement.duration) || videoElement.duration <= 0) return;
+  const targetTime = progress * Math.max(0, videoElement.duration - 0.05);
+  if (Math.abs(videoElement.currentTime - targetTime) > 0.025) {
+    if (typeof videoElement.fastSeek === "function") {
+      videoElement.fastSeek(targetTime);
+    } else {
+      videoElement.currentTime = targetTime;
+    }
+  }
+}
 
 function syncScroll() {
   const rect = stage.getBoundingClientRect();
@@ -21,12 +73,7 @@ function syncScroll() {
   document.documentElement.style.setProperty("--dust", String(1 - easedUfo));
   document.documentElement.style.setProperty("--ufo", String(easedUfo));
 
-  if (Number.isFinite(video.duration) && video.duration > 0) {
-    const targetTime = progress * Math.max(0, video.duration - 0.05);
-    if (Math.abs(video.currentTime - targetTime) > 0.025) {
-      video.currentTime = targetTime;
-    }
-  }
+  scrubVideo(video, progress);
 }
 
 function syncDetailsScroll() {
@@ -38,12 +85,7 @@ function syncDetailsScroll() {
 
   document.documentElement.style.setProperty("--details", String(progress));
 
-  if (Number.isFinite(detailsVideo.duration) && detailsVideo.duration > 0) {
-    const targetTime = progress * Math.max(0, detailsVideo.duration - 0.05);
-    if (Math.abs(detailsVideo.currentTime - targetTime) > 0.025) {
-      detailsVideo.currentTime = targetTime;
-    }
-  }
+  scrubVideo(detailsVideo, progress);
 }
 
 function primeVideo() {
@@ -58,8 +100,15 @@ function primeDetailsVideo() {
   syncDetailsScroll();
 }
 
+rememberVideoSource(video);
+rememberVideoSource(detailsVideo);
+applyResponsiveVideos();
+
 video.addEventListener("loadedmetadata", primeVideo);
+video.addEventListener("error", () => fallbackToDesktop(video));
 detailsVideo?.addEventListener("loadedmetadata", primeDetailsVideo);
+detailsVideo?.addEventListener("error", () => fallbackToDesktop(detailsVideo));
+mobileVideoQuery.addEventListener("change", applyResponsiveVideos);
 window.addEventListener("scroll", () => {
   syncScroll();
   syncDetailsScroll();

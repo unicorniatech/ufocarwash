@@ -496,6 +496,11 @@ a {
   z-index: 0;
 }
 
+.hero-video.using-mobile-video,
+.details-video.using-mobile-video {
+  object-fit: cover;
+}
+
 .details-shade {
   position: absolute;
   inset: 0;
@@ -1167,7 +1172,20 @@ select {
   }
 
   .hero-video {
+    object-fit: contain;
     object-position: center center;
+    background: #05050a;
+  }
+
+  .details-video {
+    object-fit: contain;
+    object-position: center center;
+    background: #05050a;
+  }
+
+  .hero-video.using-mobile-video,
+  .details-video.using-mobile-video {
+    object-fit: cover;
   }
 
   .watermark-cover {
