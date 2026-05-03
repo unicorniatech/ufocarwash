@@ -1,5 +1,7 @@
 const stage = document.querySelector("#scrollStage");
 const video = document.querySelector("#heroVideo");
+const detailsStage = document.querySelector("#detalles");
+const detailsVideo = document.querySelector("#detailsVideo");
 const STORAGE_KEY = "ufo-carwash-bookings";
 const services = [
   { name: "Lavado UFO completo", price: 180, minutes: 45, description: "Exterior, espuma activa, rines, secado y brillo final." },
@@ -27,18 +29,52 @@ function syncScroll() {
   }
 }
 
+function syncDetailsScroll() {
+  if (!detailsStage || !detailsVideo) return;
+
+  const rect = detailsStage.getBoundingClientRect();
+  const scrollable = Math.max(1, detailsStage.offsetHeight - window.innerHeight);
+  const progress = clamp(-rect.top / scrollable, 0, 1);
+
+  document.documentElement.style.setProperty("--details", String(progress));
+
+  if (Number.isFinite(detailsVideo.duration) && detailsVideo.duration > 0) {
+    const targetTime = progress * Math.max(0, detailsVideo.duration - 0.05);
+    if (Math.abs(detailsVideo.currentTime - targetTime) > 0.025) {
+      detailsVideo.currentTime = targetTime;
+    }
+  }
+}
+
 function primeVideo() {
   video.pause();
   video.currentTime = 0.001;
   syncScroll();
 }
 
+function primeDetailsVideo() {
+  detailsVideo.pause();
+  detailsVideo.currentTime = 0.001;
+  syncDetailsScroll();
+}
+
 video.addEventListener("loadedmetadata", primeVideo);
-window.addEventListener("scroll", syncScroll, { passive: true });
-window.addEventListener("resize", syncScroll);
+detailsVideo?.addEventListener("loadedmetadata", primeDetailsVideo);
+window.addEventListener("scroll", () => {
+  syncScroll();
+  syncDetailsScroll();
+}, { passive: true });
+window.addEventListener("resize", () => {
+  syncScroll();
+  syncDetailsScroll();
+});
 
 if (video.readyState >= 1) {
   primeVideo();
+}
+
+if (detailsVideo?.readyState >= 1) {
+  primeDetailsVideo();
 }
 
 function readBookings() {
