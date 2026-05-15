@@ -1,4 +1,5 @@
 const STORAGE_KEY = "ufo-carwash-bookings";
+const HOUSES_CONTENT_KEY = "ufo-projects-houses-content";
 const SERVICES = {
   "Lavado UFO completo": 180,
   "Interior profundo": 260,
@@ -9,6 +10,23 @@ const table = document.querySelector("#bookingTable");
 const stats = document.querySelector("#adminStats");
 const dateFilter = document.querySelector("#adminDate");
 const statusFilter = document.querySelector("#statusFilter");
+const housesEditor = document.querySelector("#housesEditor");
+const housesEditorMessage = document.querySelector("#housesEditorMessage");
+
+const defaultHousesContent = {
+  name: "Residencial Cielo Sur",
+  location: "Zacatepec, Morelos",
+  price: "Desde $1.89M MXN",
+  cta: "Agendar visita",
+  headline: "Casas listas para vivir, invertir y crecer en Morelos.",
+  description: "Una landing sobria para desarrollos inmobiliarios: modelos claros, beneficios concretos, ubicación y llamada directa a visita. Sin hero cinematográfico, enfocada en conversión.",
+  amenities: ["Seguridad 24/7", "Roof garden", "Cisterna", "Estacionamiento", "Áreas verdes", "Entrega programada"],
+  listings: [
+    { title: "Modelo Aurora", description: "3 recámaras, 2.5 baños, cocina equipada y patio privado.", price: "$1.89M" },
+    { title: "Modelo Terraza", description: "Espacios amplios, balcón principal y opción de ampliación.", price: "$2.35M" },
+    { title: "Modelo Inversión", description: "Unidad compacta con alta demanda de renta en zona conectada.", price: "$1.45M" },
+  ],
+};
 
 const today = new Date().toISOString().slice(0, 10);
 dateFilter.value = today;
@@ -19,6 +37,14 @@ function readBookings() {
 
 function writeBookings(bookings) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+}
+
+function readHousesContent() {
+  return JSON.parse(localStorage.getItem(HOUSES_CONTENT_KEY) || JSON.stringify(defaultHousesContent));
+}
+
+function writeHousesContent(content) {
+  localStorage.setItem(HOUSES_CONTENT_KEY, JSON.stringify(content));
 }
 
 function money(amount) {
@@ -139,3 +165,55 @@ dateFilter.addEventListener("change", renderAdmin);
 statusFilter.addEventListener("change", renderAdmin);
 
 renderAdmin();
+
+function listingsToText(listings) {
+  return listings.map((listing) => `${listing.title} | ${listing.description} | ${listing.price}`).join("\n");
+}
+
+function textToListings(text) {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [title = "Modelo", description = "Descripción pendiente", price = "$0"] = line.split("|").map((part) => part.trim());
+      return { title, description, price };
+    });
+}
+
+function fillHousesEditor(content = readHousesContent()) {
+  if (!housesEditor) return;
+  housesEditor.querySelector('[name="name"]').value = content.name;
+  housesEditor.querySelector('[name="location"]').value = content.location;
+  housesEditor.querySelector('[name="price"]').value = content.price;
+  housesEditor.querySelector('[name="cta"]').value = content.cta;
+  housesEditor.querySelector('[name="headline"]').value = content.headline;
+  housesEditor.querySelector('[name="description"]').value = content.description;
+  housesEditor.querySelector('[name="amenities"]').value = content.amenities.join(", ");
+  housesEditor.querySelector('[name="listings"]').value = listingsToText(content.listings);
+}
+
+housesEditor?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(housesEditor);
+  const content = {
+    name: data.get("name").trim(),
+    location: data.get("location").trim(),
+    price: data.get("price").trim(),
+    cta: data.get("cta").trim(),
+    headline: data.get("headline").trim(),
+    description: data.get("description").trim(),
+    amenities: data.get("amenities").split(",").map((item) => item.trim()).filter(Boolean),
+    listings: textToListings(data.get("listings")),
+  };
+  writeHousesContent(content);
+  housesEditorMessage.textContent = "Landing de casas guardada. Abre la página de Casas para verla actualizada.";
+});
+
+document.querySelector("#resetHousesContent")?.addEventListener("click", () => {
+  writeHousesContent(defaultHousesContent);
+  fillHousesEditor(defaultHousesContent);
+  housesEditorMessage.textContent = "Contenido demo restaurado.";
+});
+
+fillHousesEditor();

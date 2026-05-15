@@ -15,6 +15,8 @@
       <nav class="admin-nav">
         <a href="./index.html">UFO CARWASH</a>
         <div>
+          <a href="./casas.html">Casas</a>
+          <a href="./proyectos.html">Proyectos</a>
           <a href="./index.html#reservar">Nueva reserva</a>
           <button id="seedBookings" type="button">Demo data</button>
         </div>
@@ -49,6 +51,57 @@
       </section>
 
       <section class="booking-table" id="bookingTable" aria-label="Lista de reservas"></section>
+
+      <section class="content-editor" aria-label="Editor de landing de casas">
+        <div>
+          <div class="section-kicker">Editor</div>
+          <h2>Landing de casas</h2>
+          <p>Edita textos, precio base, ubicación, amenidades y propiedades destacadas. Se guarda en este navegador para prototipar el dashboard.</p>
+        </div>
+
+        <form id="housesEditor" class="editor-form">
+          <div class="field-grid">
+            <label>
+              Nombre del desarrollo
+              <input name="name" required>
+            </label>
+            <label>
+              Ubicación
+              <input name="location" required>
+            </label>
+            <label>
+              Precio desde
+              <input name="price" required>
+            </label>
+            <label>
+              CTA principal
+              <input name="cta" required>
+            </label>
+          </div>
+          <label>
+            Titular
+            <textarea name="headline" rows="3" required></textarea>
+          </label>
+          <label>
+            Descripción
+            <textarea name="description" rows="4" required></textarea>
+          </label>
+          <label>
+            Amenidades, separadas por coma
+            <textarea name="amenities" rows="3" required></textarea>
+          </label>
+          <label>
+            Propiedades destacadas, una por línea: Título | Descripción | Precio
+            <textarea name="listings" rows="6" required></textarea>
+          </label>
+          <div class="editor-actions">
+            <button class="pay-button" type="submit">Guardar landing</button>
+            <button class="outline-button" id="resetHousesContent" type="button">Restaurar demo</button>
+            <a class="outline-link" href="./casas.html">Ver página</a>
+          </div>
+          <p class="booking-message" id="housesEditorMessage" role="status"></p>
+        </form>
+      </section>
     </main>
 
     <script src="./admin.js"></script>

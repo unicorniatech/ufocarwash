@@ -21,6 +21,14 @@
       "destination": "/admin.html"
     },
     {
+      "source": "/casas",
+      "destination": "/casas.html"
+    },
+    {
+      "source": "/proyectos",
+      "destination": "/proyectos.html"
+    },
+    {
       "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
     }

@@ -6,9 +6,12 @@ const outDir = path.join(root, "dist");
 const entries = [
   "index.html",
   "admin.html",
+  "casas.html",
+  "proyectos.html",
   "styles.css",
   "script.js",
   "admin.js",
+  "casas.js",
   "public",
 ];
 

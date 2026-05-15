@@ -640,9 +640,9 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
-  min-height: 46px;
   border: 1px solid rgb(24 231 255 / 0.24);
   border-radius: 6px;
   padding: 0 12px;
@@ -650,6 +650,18 @@ select {
   color: #fff;
   font: inherit;
   font-weight: 800;
+}
+
+input,
+select {
+  min-height: 46px;
+}
+
+textarea {
+  min-height: 92px;
+  padding-top: 12px;
+  line-height: 1.45;
+  resize: vertical;
 }
 
 .slot-picker {
@@ -1079,6 +1091,286 @@ select {
   margin-bottom: 18px;
 }
 
+.content-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(360px, 1.25fr);
+  gap: clamp(22px, 5vw, 56px);
+  margin-top: 24px;
+  padding: clamp(18px, 4vw, 32px);
+  border: 1px solid rgb(24 231 255 / 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at top right, rgb(116 255 38 / 0.12), transparent 32%),
+    linear-gradient(180deg, rgb(12 18 30 / 0.9), rgb(4 6 11 / 0.9));
+}
+
+.content-editor h2 {
+  margin: 0;
+  font-family: "Archivo Black", Inter, sans-serif;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 0.96;
+}
+
+.content-editor p {
+  color: #b8d4dc;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.editor-form {
+  display: grid;
+  gap: 14px;
+}
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.editor-actions .pay-button {
+  width: min(240px, 100%);
+  margin-top: 0;
+}
+
+.outline-button {
+  min-height: 44px;
+  border: 1px solid rgb(24 231 255 / 0.36);
+  border-radius: 6px;
+  padding: 0 16px;
+  color: white;
+  background: rgb(24 231 255 / 0.08);
+  font-weight: 900;
+}
+
+.site-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px clamp(18px, 5vw, 72px);
+  background: rgb(5 5 10 / 0.82);
+  border-bottom: 1px solid rgb(24 231 255 / 0.16);
+  backdrop-filter: blur(16px);
+}
+
+.site-logo {
+  color: white;
+  text-decoration: none;
+  font-family: "Archivo Black", Inter, sans-serif;
+}
+
+.site-topbar nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.site-topbar nav a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #effcff;
+  background: rgb(24 231 255 / 0.08);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.houses-body {
+  background: #05050a;
+  color: white;
+}
+
+.houses-landing,
+.houses-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.75fr);
+  gap: clamp(24px, 6vw, 80px);
+  align-items: center;
+  padding: clamp(64px, 10vw, 128px) clamp(20px, 7vw, 96px);
+  background:
+    radial-gradient(circle at 80% 20%, rgb(116 255 38 / 0.13), transparent 30%),
+    radial-gradient(circle at 18% 80%, rgb(24 231 255 / 0.12), transparent 34%),
+    #05050a;
+}
+
+.houses-copy h1,
+.houses-section h2,
+.houses-contact h2,
+.projects-hub h1 {
+  margin: 0;
+  font-family: "Archivo Black", Inter, sans-serif;
+  font-size: clamp(42px, 7vw, 104px);
+  line-height: 0.94;
+}
+
+.houses-copy p,
+.houses-contact p,
+.projects-hub p {
+  max-width: 680px;
+  color: #b8d4dc;
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.houses-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.houses-cta .pay-button {
+  width: min(240px, 100%);
+}
+
+.houses-cta span {
+  color: #b8ff9d;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.property-spotlight {
+  min-height: 520px;
+  padding: 20px;
+  border: 1px solid rgb(24 231 255 / 0.24);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.03)),
+    rgb(8 12 18 / 0.86);
+  box-shadow: 0 28px 90px rgb(0 0 0 / 0.38);
+}
+
+.property-spotlight span,
+.property-spotlight strong {
+  display: block;
+}
+
+.property-spotlight span {
+  color: #b8ff9d;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.property-spotlight strong {
+  margin-top: 8px;
+  font-size: 26px;
+}
+
+.house-visual {
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+  margin-top: 22px;
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgb(213 194 145 / 0.18), transparent 34%),
+    radial-gradient(circle at 62% 18%, rgb(116 255 38 / 0.12), transparent 28%),
+    #10141a;
+}
+
+.house-visual div {
+  width: min(260px, 70%);
+  aspect-ratio: 1.25;
+  border: 4px solid rgb(24 231 255 / 0.78);
+  border-top: 0;
+  transform: perspective(500px) rotateX(8deg);
+  box-shadow: 0 0 38px rgb(24 231 255 / 0.22);
+  position: relative;
+}
+
+.house-visual div::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -62px;
+  width: 74%;
+  aspect-ratio: 1;
+  border-left: 4px solid rgb(116 255 38 / 0.8);
+  border-top: 4px solid rgb(116 255 38 / 0.8);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.houses-section,
+.projects-hub {
+  padding: clamp(64px, 10vw, 120px) clamp(20px, 7vw, 96px);
+  background: #05050a;
+}
+
+.houses-section.alt {
+  background:
+    radial-gradient(circle at 78% 30%, rgb(255 53 232 / 0.12), transparent 30%),
+    #070910;
+}
+
+.amenity-grid,
+.listing-grid,
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.amenity-grid article,
+.listing-grid article,
+.project-grid a {
+  min-height: 190px;
+  padding: 20px;
+  border: 1px solid rgb(24 231 255 / 0.22);
+  border-radius: 8px;
+  background: rgb(9 14 22 / 0.82);
+  text-decoration: none;
+  color: white;
+}
+
+.amenity-grid span {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lime), var(--cyan));
+}
+
+.listing-grid span,
+.project-grid span {
+  color: #b8ff9d;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.listing-grid h3,
+.project-grid strong {
+  display: block;
+  margin: 12px 0;
+  font-size: 25px;
+}
+
+.listing-grid p,
+.project-grid p {
+  color: #b8d4dc;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.listing-grid a {
+  color: #b8ff9d;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .booking-table {
   display: grid;
   gap: 12px;
@@ -1243,6 +1535,9 @@ select {
   .membership-benefits,
   .booking-flow,
   .app-section,
+  .content-editor,
+  .houses-landing,
+  .houses-contact,
   .admin-hero,
   .admin-card,
   .admin-toolbar {
@@ -1306,7 +1601,14 @@ select {
   }
 
   .admin-nav div,
-  .admin-actions {
+  .admin-actions,
+  .site-topbar {
     flex-direction: column;
+  }
+
+  .amenity-grid,
+  .listing-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 }

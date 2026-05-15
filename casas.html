@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Casas | Desarrollos y preventas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2306060a'/%3E%3Cpath d='M12 32 32 14l20 18v20H12Z' fill='none' stroke='%2318e7ff' stroke-width='5'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="houses-body">
+    <header class="site-topbar">
+      <a class="site-logo" href="./index.html">UFO PROJECTS</a>
+      <nav aria-label="Proyectos">
+        <a href="./index.html">Carwash</a>
+        <a href="./casas.html">Casas</a>
+        <a href="./proyectos.html">Otros proyectos</a>
+        <a href="./admin.html">Admin</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="houses-landing">
+        <div class="houses-copy">
+          <div class="section-kicker">Desarrollos inmobiliarios</div>
+          <h1 data-house="headline"></h1>
+          <p data-house="description"></p>
+          <div class="houses-cta">
+            <a class="pay-button" href="#contacto" data-house="cta"></a>
+            <span data-house="price"></span>
+          </div>
+        </div>
+        <aside class="property-spotlight">
+          <span data-house="name"></span>
+          <strong data-house="location"></strong>
+          <div class="house-visual" aria-hidden="true">
+            <div></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="houses-section">
+        <div class="section-kicker">Amenidades</div>
+        <h2>Diseñado para vender confianza desde la primera visita.</h2>
+        <div class="amenity-grid" id="amenityGrid"></div>
+      </section>
+
+      <section class="houses-section alt">
+        <div class="section-kicker">Propiedades</div>
+        <h2>Modelos destacados</h2>
+        <div class="listing-grid" id="listingGrid"></div>
+      </section>
+
+      <section class="houses-contact" id="contacto">
+        <div>
+          <div class="section-kicker">Contacto</div>
+          <h2>Agenda una visita o pide inventario actualizado.</h2>
+          <p>Esta landing ya está lista para conectarse a CRM, WhatsApp o formulario real.</p>
+        </div>
+        <form class="booking-form">
+          <div class="field-grid">
+            <label>Nombre<input type="text" placeholder="Nombre completo"></label>
+            <label>Teléfono<input type="tel" placeholder="777 123 4567"></label>
+            <label>Presupuesto<select><option>$1M - $2M</option><option>$2M - $3M</option><option>$3M+</option></select></label>
+            <label>Interés<select><option>Casa para vivir</option><option>Inversión</option><option>Preventas</option></select></label>
+          </div>
+          <button class="pay-button" type="button">Solicitar información</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./casas.js"></script>
+  </body>
+</html>
